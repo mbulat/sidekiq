@@ -190,6 +190,9 @@ module Sidekiq
       $stdin.reopen('/dev/null')
 
       initialize_logger
+    rescue RuntimeError => ex
+      # RuntimeError: ObjectSpace is disabled; each_object will only work with Class, pass -X+O to enable
+      puts "Unable to reopen logs: #{ex.message}"
     end
 
     def set_environment(cli_env)
